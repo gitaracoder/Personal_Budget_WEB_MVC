@@ -1,0 +1,199 @@
+{% extends "base_logged.html" %}
+
+{% block title %}Personal Budget - przeglądaj bilans{% endblock %}
+
+{% block body %}
+
+<script>
+
+window.onload = function() {
+
+var options = {
+
+	backgroundColor: "",  title: {
+	fontStyle: "Arial",
+		text: ""
+	},
+	data: [{
+	fontStyle: "Arial",
+			type: "pie",
+			startAngle: 45,
+			showInLegend: "true",
+			legendText: "{label}",
+			indexLabel: "{label} ({y})",
+			yValueFormatString:"#,##0.#"%"",
+			dataPoints: [
+			
+			{% for message in messages_in_balance %}
+			{% for chart in message.chartData %}
+          		{ label: "{{ chart.name }}", y: {{ chart['SUM(amount)'] }} },
+          	{% endfor %}
+			{% endfor %}
+				
+			]
+	}]
+};
+$("#chartContainer").CanvasJSChart(options);
+
+}
+
+</script>
+
+	<div class="jumbotron">
+		<h2><i class="demo-icon icon-book-open"></i> Przeglądaj bilans</h2>
+		<form method="post" action="/balance/browse">
+		
+		{% for message in messages_in_balance %}
+			
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<p>Wybierz okres z rozwijanej listy, lub wprowadź początkową i końcową datę zakresu.</p>
+					<select class="custom-select" name="periodSelect" id="periodSelect">							
+					
+					{% if message.dropDownSelect == 1 %}
+						<option value="1" selected>Bieżący miesiąc</option>
+						<option value="2">Poprzedni miesiąc</option>
+						<option value="3">Bieżący rok</option>
+						<option value="4">Niestandardowy</option>
+					
+					{% elseif message.dropDownSelect == 2 %}
+					   <option value="1" >Bieżący miesiąc</option>
+						<option value="2" selected>Poprzedni miesiąc</option>
+						<option value="3">Bieżący rok</option>
+						<option value="4">Niestandardowy</option>
+					
+					{% elseif message.dropDownSelect == 3 %}
+					   <option value="1" >Bieżący miesiąc</option>
+						<option value="2" >Poprzedni miesiąc</option>
+						<option value="3" selected>Bieżący rok</option>
+						<option value="4">Niestandardowy</option>
+					
+					{% else %}
+					   <option value="1" >Bieżący miesiąc</option>
+						<option value="2" >Poprzedni miesiąc</option>
+						<option value="3" >Bieżący rok</option>
+						<option value="4" selected>Niestandardowy</option>
+					
+					{% endif %}
+					</select>
+				</div>
+			
+				<div class="col-md-6">
+					<div>
+						<label for="beginDate">Początek zakresu</label>
+						<input type="date" class="form-control" name="beginDate" id="beginDate">
+					</div>
+					<div>
+						<label for="endDate">Koniec zakresu</label>
+						<input type="date" class="form-control" name="endDate" id="endDate">
+					</div>
+				</div>	
+			</div>
+				
+				{% endfor %}
+				
+			<div class="row mb-3">
+				<button role="submit" class="btn btn-block btn-outline-success btn-lg">Zatwierdź</button>
+			</div>
+					
+			<div class="row">
+				<div class="col-md-6">
+					<p class="font-weight-bold">Przychody</p>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Kategoria</th>
+								<th scope="col">Data</th>
+								<th scope="col">Kwota</th>
+							</tr>
+						</thead>
+						<tbody>
+						
+						{% for message in messages_in_balance %}
+						{% for income in message.incomes %}
+					
+							<tr>
+								<th scope="row">{{ loop.index }}</th>
+								<td>{{ income.name }}</td>
+								<td>{{ income.date_of_income }}</td>
+								<td>{{ income.amount }}</td>
+							</tr>
+					
+						{% endfor %}
+						
+						</tbody>
+					</table>
+					<p class="font-weight-bold">Suma przychodów: {{" "}}{{ message.sumOfIncomes }}</p>
+					
+				</div>
+				
+				{% endfor %}
+				
+				<div class="col-md-6">
+					<p class="font-weight-bold">Wydatki</p>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Kategoria</th>
+								<th scope="col">Data</th>
+								<th scope="col">Kwota</th>
+							</tr>
+						</thead>
+						<tbody>
+						
+						{% for message in messages_in_balance %}
+						{% for expense in message.expenses %}
+					
+							<tr>
+								<th scope="row">{{ loop.index }}</th>
+								<td>{{ expense.name }}</td>
+								<td>{{ expense.date_of_expense }}</td>
+								<td>{{ expense.amount }}</td>
+							</tr>
+					
+						{% endfor %}
+
+						</tbody>
+					</table>
+					<p class="font-weight-bold">Suma wydatków: {{" "}}{{ message.sumOfExpenses }}</p>
+					
+				</div>
+			</div>
+			<div class="row">
+			
+			{% if message.sumOfExpenses == "Brak wydatków w wybranym okresie" %}
+			   
+			{% else %}
+			   <div class="col-md-12 mt-3">
+					<div id="chartContainer" style="height: 370px; margin: 0px auto; margin-bottom: 30px; margin-top: 20px;"></div>
+				</div>
+			{% endif %}
+
+			</div>
+			<div class="row">
+			
+			{% if (message.sumOfExpenses == "Brak wydatków w wybranym okresie") and (message.sumOfIncomes == "Brak przychodów w wybranym okresie") %}
+			   
+			{% else %}
+			   {% for text in message.summary %}
+				<div class="col-md-12 mt-3">
+					<h2 class="text-center  {{" "}}{{ text.type }}">{{ text.body }}</h2>
+				</div>
+			
+			{% endfor %}
+			{% endif %}
+			</div>
+			
+			{% endfor %}
+		</form>
+		<div class="row">
+			<div class="col-md-12">
+				<a type="button" href="/home/index" class="btn mb-3 mt-3 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-list"></i> Menu główne</a>
+			</div>
+		</div>
+	</div>
+	<hr>
+
+{% endblock %}

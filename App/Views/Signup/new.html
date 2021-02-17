@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal Budget - Zarejestruj się{% endblock %}
+
+{% block footer %}
+    
+<!--	
+	<script src="/js/hideShowPassword.min.js"></script>
+
+    <script>
+        /**
+         * Add jQuery Validation plugin method for a valid password
+         *
+         * Valid passwords contain at least one letter and one number.
+         */
+        $.validator.addMethod('validPassword',
+            function(value, element, param) {
+
+                if (value != '') {
+                    if (value.match(/.*[a-z]+.*/i) == null) {
+                        return false;
+                    }
+                    if (value.match(/.*\d+.*/) == null) {
+                        return false;
+                    }
+                }
+
+                return true;
+            },
+            'Must contain at least one letter and one number'
+        );
+
+        $(document).ready(function() {
+
+            /**
+             * Validate the form
+             */
+            $('#formSignup').validate({
+                rules: {
+                    name: 'required',
+                    email: {
+                        required: true,
+                        email: true,
+                        remote: '/account/validate-email'
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                        validPassword: true
+                    }
+                },
+                messages: {
+                    email: {
+                        remote: 'email already taken'
+                    }
+                }
+            });
+
+
+            /**
+              * Show password toggle button
+              */
+            $('#inputPassword').hideShowPassword({
+                show: false,
+                innerToggle: 'focus'
+            });
+        });
+    </script>
+	
+-->
+
+{% endblock %}
+
+{% block body %}
+
+	<div class="jumbotron">
+		<div class="row">
+			<div class="col-md-12">
+				<h2><i class="demo-icon icon-user-plus"></i> Rejestracja</h2>
+				<form method="post" action="/signup/create" id="formSignup">
+					<div class="form-group">
+						<label for="inputName">Imię</label>
+						<input class="form-control" id="inputName" name="name" placeholder="Podaj imię" autofocus value="{{ user.name }}" required />
+					</div>
+					<div class="form-group">
+						<label for="inputEmail">Adres email</label>
+						<input class="form-control" id="inputEmail" name="email" placeholder="Podaj email" value="{{ user.email }}" required type="email" />
+						<small id="emailHelp" class="form-text text-muted">Dbamy o Twoją prywtność, adres e-mail nie będzie widoczny dla innych.</small>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword">Hasło</label>
+						<input class="form-control" type="password" id="inputPassword" name="password" placeholder="Podaj hasło" required />
+					</div>
+					<button type="submit" class="btn-lg btn btn-outline-success">Zarejestruj</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<hr>
+			
+{% endblock %}

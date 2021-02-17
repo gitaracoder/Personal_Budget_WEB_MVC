@@ -1,0 +1,69 @@
+ {% extends (current_user)
+    ? ('base_logged.html') 
+    : ('base.html') %}
+
+{% block title %}Personal Budget{% endblock %}
+
+{% block body %}
+
+    {% if current_user %}
+	
+		<div class="jumbotron">
+			<h2><i class="demo-icon icon-list"></i> Menu główne</h2>
+			<h4 class="mb-5 text-center" >Witaj {{" "}}{{ current_user.name }}! Co teraz robimy?</h4>
+			<div class="row">
+				<div class="col-md-6">
+					<a type="button" href="/income/new" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-download"></i> Dodaj przychód</a>
+				</div>
+				<div class="col-md-6">
+					<a type="button" href="/expense/new" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-upload"></i> Dodaj wydatek</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<a type="button" href="/balance/browse" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-book-open"></i> Przeglądaj bilans</a>
+				</div>
+				<div class="col-md-6">
+					<a type="button" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Ustawienia</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a type="button" href="/logout" class="btn mb-4 btn-block btn-outline-danger btn-lg"><i class="demo-icon icon-logout"></i> Wyloguj się</a>
+				</div>
+			</div>
+		</div>
+		<hr>
+
+    {% else %}
+
+		<div class="row mb-4">
+			<div class="col-sm-12">
+				<h2>Dlaczego warto prowadzić budżet domowy?</h2>
+				<p class="text-justify">Kontrola. W zarządzaniu domowymi finansami chodzi przede wszystkim o to, by mieć kontrolę. Kontrolę nad własną sytuacją finansową. Tak aby mieć realny wpływ na to ile, kiedy i na co wydajemy – zamiast dostosowywać się do tego ile zostaje nam w portfelu na koniec miesiąca. I tu przydaje się nam domowy budżet.</p>
+
+				<p class="text-justify">Budżet domowy to pierwszy krok do przejęcia kontroli nad własnymi finansami. Daje on wiedzę o tym, na co wydajemy pieniądze i jest jednocześnie narzędziem do tego, aby mądrze planować przyszłe wydatki.</p>
+			</div>
+		</div>
+	
+			<div class="jumbotron">
+				<div class="row">
+					<div class="col-md-6">
+					
+						<h2><i class="demo-icon icon-login"></i> Zaloguj się</h2>
+						<p>Jeżeli posiadasz już konto pamiętaj by zapisywać wszystkie przychody i wydatki, by jak najdokładniej planować swój budżet.</p>
+						<p><a class="btn-lg btn btn-outline-success" href="/login" role="button">Zaloguj</a></p> 
+					</div>
+					
+					<div class="col-md-6">
+						<h2><i class="demo-icon icon-user-plus"></i> Zarejestruj się</h2>
+						<p>Jeżeli nie posiadasz jeszcze konta, załóż je już teaz i rozpocznij kontrolę nad swoim budżerem, to nic nie kosztuje, możesz jedynie zyskać! </p>
+						<p><a class="btn-lg btn btn-outline-primary" href="/signup/new" role="button">Zarejestruj</a></p>
+					</div>
+				</div>
+			</div>
+			<hr>
+        
+    {% endif %}
+
+{% endblock %}

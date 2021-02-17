@@ -1,0 +1,11 @@
+
+.icon-login:before { content: '\e800'; } /* '' */
+.icon-list:before { content: '\e801'; } /* '' */
+.icon-download:before { content: '\e802'; } /* '' */
+.icon-upload:before { content: '\e803'; } /* '' */
+.icon-logout:before { content: '\e804'; } /* '' */
+.icon-cog-alt:before { content: '\e805'; } /* '' */
+.icon-book-open:before { content: '\e806'; } /* '' */
+.icon-money:before { content: '\f0d6'; } /* '' */
+.icon-dollar:before { content: '\f155'; } /* '' */
+.icon-user-plus:before { content: '\f234'; } /* '' */

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/main.css">
+		<link rel="stylesheet" href="/css/fontello.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-6">
+			<a class="navbar-brand" href="/home/index"><i class="demo-icon icon-money"></i> Personal Budget</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+				  <li class="nav-item active">
+					<a class="nav-link" href="/income/new"><i class="demo-icon icon-download"></i> Przychód</a>
+				  </li>
+				  <li class="nav-item active">
+					<a class="nav-link" href="/expense/new"><i class="demo-icon icon-upload"></i> Wydatek</a>
+				  </li>
+				  <li class="nav-item active">
+					<a class="nav-link" href="/balance/browse"><i class="demo-icon icon-book-open"></i> Bilans</a>
+				  </li>
+				  <li class="nav-item active">
+					<a class="nav-link" href="#"><i class="demo-icon icon-cog-alt"></i> Ustawienia</a>
+				  </li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+				  <li class="nav-item active">
+					<a class="nav-link text-danger" href="/logout"><i class="demo-icon icon-logout"></i> Wyloguj</a>
+				  </li>
+				</ul>
+			</div>
+		</nav>
+
+		<main>
+
+			<div class="jumbotron">
+				<div id="baner">
+					<div id="mainBaner">
+						Personal Budget
+					</div>
+					<div id="subBaner">
+						<i class="demo-icon icon-dollar"></i>Aplikacja do zarządzania Budżetem Osobistym<i class="demo-icon icon-dollar"></i>
+					</div>
+				</div>
+			</div>
+
+	<div class="container">
+
+        
+{% for message in flash_messages %}
+
+<div class="{{ message.type }}" role="alert">
+
+			
+					{{ message.body }}
+				</div>
+			
+			{% endfor %}
+        
+
+        {% block body %}
+		
+        {% endblock %}
+
+    </div>
+	
+	</main>
+	<footer class="container">
+			<p>&copy; Personal Budget 2020</p>
+		</footer>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>  
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+	
+
+    {% block footer %}
+    {% endblock %}
+</body>
+</html>

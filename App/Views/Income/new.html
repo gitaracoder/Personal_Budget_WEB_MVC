@@ -1,0 +1,77 @@
+{% extends "base_logged.html" %}
+
+{% block title %}Personal Budget - dodaj przychód{% endblock %}
+
+{% block body %}
+
+   
+	<div class="jumbotron">
+		<h2><i class="demo-icon icon-download"></i> Dodaj przychód</h2>
+		<form method="post" action="/income/create">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="amountIncome">Kwota przychdu</label>
+						<input type="number" class="form-control" name="incomeAmount" step=".01" placeholder="wpisz kwotę">
+						
+					</div>
+				</div>
+				<div class="col-md-6">
+					<label for="dateIncome">Data przychodu</label>
+					<input type="date" class="form-control" name="incomeDate">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				<p>Kategoria przychodu</p>
+				
+				{% for name in incomeCategoriesAssignedToUser %}
+				
+				 {% if loop.first %}
+					
+					<div class="form-check">
+					  <input class="form-check-input" type="radio" name="incomeCategory" value="{{ name.id }}" id="{{ name.id }}"  checked>
+					  <label class="form-check-label" for="{{ name.id }}">
+						{{ name.name }}
+					  </label>
+					</div>
+					
+					{% else %}
+
+					<div class="form-check">
+					  <input class="form-check-input" type="radio" name="incomeCategory" value="{{ name.id }}" id="{{ name.id }}">
+					  <label class="form-check-label" for="{{ name.id }}">
+						{{ name.name }}
+					  </label>
+					</div>
+					
+						{% endif %}
+					
+					{% endfor %}
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 mt-3">
+					<p>Komentarz</p>
+					<div class="input-group">
+						<div class="input-group-prepend"></div>
+						<textarea class="form-control" name="incomeComment" aria-label="With textarea"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 mt-3 text-center">
+					<button type="submit" class="btn btn-block btn-outline-success btn-lg">Zatwierdź</button>';
+				</div>
+				<div class="col-md-6 mt-3 text-center">
+					<a role="button" href="/home/index" class="btn btn-block btn-outline-danger btn-lg">Anuluj</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<hr>
+			
+
+{% endblock %}

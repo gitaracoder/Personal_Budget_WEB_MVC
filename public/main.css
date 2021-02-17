@@ -1,0 +1,42 @@
+/* Background pattern from Toptal Subtle Patterns */
+body
+{
+	background-image: url("img/background.png");
+}
+
+#baner
+{
+	text-align: center;
+}
+
+#mainBaner
+{
+	font-size: 72px;
+}
+
+#subBaner
+{
+	font-size: 20px;
+}
+
+@media (min-width: 576px) 
+{
+	.jumbotron 
+	{
+		padding-bottom: 20px;
+		padding-top: 20px;
+	}
+}
+
+@media (max-width: 600px) 
+{
+	#mainBaner
+	{
+		font-size: 50px;
+	}
+
+	#subBaner
+	{
+		font-size: 14px;
+	}
+}
