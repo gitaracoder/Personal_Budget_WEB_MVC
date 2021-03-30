@@ -53,6 +53,7 @@ class View
 			$twig->addGlobal('expenseCategoriesAssignedToUser', \App\Models\Expenses::getExpenseCategoriesAssigned());
 			$twig->addGlobal('paymentMethodsAssignedToUser', \App\Models\Expenses::getPaymentMethodsAssigned());
 			$twig->addGlobal('messages_in_balance', \App\BalanceMessages::getMessages());
+			//$twig->addGlobal('expenseLimitStatus', \App\Controllers\Expense::checkLimitAction());
         }
 
         echo $twig->render($template, $args);

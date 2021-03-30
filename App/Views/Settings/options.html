@@ -1,0 +1,42 @@
+ {% extends "base_logged.html" %}
+
+{% block title %}Personal Budget - ustawienia{% endblock %}
+
+{% block body %}
+
+   
+	<div class="jumbotron">
+			<h2><i class="demo-icon icon-cog-alt"></i> Ustawienia</h2>
+			
+			<div class="row mt-4">
+				<div class="col-md-6">
+					<a type="button" href="/settings/changename" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Zmień Imię</a>
+				</div>
+				<div class="col-md-6">
+					<a type="button" href="/settings/changemail" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Zmień adres e-mail</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<a type="button" href="/settings/changepassword" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Zmień hasło</a>
+				</div>
+				<div class="col-md-6">
+					<a type="button" href="/settings/incomecategory" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Edytuj kategorie przychodów</a>
+				</div>
+				<div class="col-md-6">
+					<a type="button" href="/settings/expensecategory" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Edytuj kategorie wydatków</a>
+				</div>
+				<div class="col-md-6">
+					<a type="button" href="/settings/paymentmethod" class="btn mb-5 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Edytuj metody płatności</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a type="button" href="/home/index" class="btn mb-3 mt-3 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-list"></i> Menu główne</a>
+				</div>
+			</div>
+		</div>
+	<hr>
+			
+
+{% endblock %}

@@ -7,6 +7,140 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/main.css">
 		<link rel="stylesheet" href="/css/fontello.css">
+		
+		<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+		
+<script>
+
+/*
+
+function showUser(str) 
+{
+  if (str == "") 
+  {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  } 
+  else 
+  {
+  
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() 
+	{
+      //if (this.readyState == 4 && this.status == 200) 
+	  //{
+        document.getElementById("txtHint").innerHTML = this.responseText;
+     // }
+    };
+    xmlhttp.open("GET","/expense/checkLimit?q="+str,true);
+    xmlhttp.send();
+	
+	
+  }
+}
+
+
+
+
+
+
+  function showValues() 
+  {
+    var fields = $( ":input" ).serializeArray();
+    $( "#results" ).empty();
+    jQuery.each( fields, function( i, field ) 
+	{
+      $( "#results" ).append( field.value + " " );
+    });
+  }
+ 
+  //$( ":checkbox, :radio" ).click( showValues );
+  $( "expenseCategory" ).change( showValues );
+  showValues();
+  
+  
+  
+  
+  function getOption() 
+  {
+  var val = document.getElementById("amountExpense").value;
+  var cat = document.getElementById("expenseCategory").value;
+  //document.getElementById("demo").innerHTML = val + cat;
+  
+    
+  
+  var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() 
+	{
+      //if (this.readyState == 4 && this.status == 200) 
+	  //{
+        document.getElementById("content").innerHTML = this.responseText;
+     // }
+    };
+    xmlhttp.open("GET","/expense/checkLimit?v="+val+"&c="+cat,true);
+    xmlhttp.send();
+
+}
+
+  
+  function getOption() 
+  {
+  
+  var val = document.getElementById("amountExpense").value;
+  var cat = document.getElementById("expenseCategory").value;
+  var dte = document.getElementById("dateExpense").value;
+  
+  const data = { value: val, category: cat, date: dte};
+  
+  
+  fetch('/expense/checkLimit', 
+  {
+  method: 'POST', // or 'PUT'
+  headers: 
+  {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
+  */
+
+
+async function getOption()  {
+
+url = "/expense/checkLimit";
+
+  var val = document.getElementById("amountExpense").value;
+  var cat = document.getElementById("expenseCategory").value;
+  var dte = document.getElementById("dateExpense").value;
+  
+  //const data = { value: val, category: cat, date: dte};
+  var data = { value: val, category: cat, date: dte };
+
+  fetch(url, {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+  document.getElementById("content").innerHTML = data;
+})
+}
+  
+
+
+</script>
 </head>
 <body>
 
@@ -28,7 +162,7 @@
 					<a class="nav-link" href="/balance/browse"><i class="demo-icon icon-book-open"></i> Bilans</a>
 				  </li>
 				  <li class="nav-item active">
-					<a class="nav-link" href="#"><i class="demo-icon icon-cog-alt"></i> Ustawienia</a>
+					<a class="nav-link" href="/settings/options"><i class="demo-icon icon-cog-alt"></i> Ustawienia</a>
 				  </li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
@@ -77,8 +211,9 @@
 			<p>&copy; Personal Budget 2020</p>
 		</footer>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>  
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 	

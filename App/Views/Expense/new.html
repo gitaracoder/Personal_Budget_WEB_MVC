@@ -5,6 +5,13 @@
 {% block body %}
 
 
+
+
+
+<div id="content">
+</div>
+
+
 	<div class="jumbotron">
 		<h2><i class="demo-icon icon-upload"></i> Dodaj wydatek</h2>
 		<form method="post" action="/expense/create">
@@ -12,12 +19,12 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="amountExpense">Kwota wydatku</label>
-						<input type="number" class="form-control" id="amountExpense" name="amountExpense" step=".01" placeholder="wpisz kwotę">
+						<input type="number" class="form-control" id="amountExpense" name="amountExpense" step=".01" placeholder="wpisz kwotę" onchange="getOption()">
 					</div>
 				</div>
 				<div class="col-md-6">
 					<label for="dateExpense">Data wydatku</label>
-					<input type="date" class="form-control" name="dateExpense" id="dateExpense">
+					<input type="date" class="form-control" name="dateExpense" id="dateExpense" onchange="getOption()">
 				</div>
 			</div>
 			<div class="row">
@@ -50,7 +57,7 @@
 				
 				<div class="col-md-6">
 					<p>Kategoria wydatku</p>
-					<select class="custom-select" name="expenseCategory">
+					<select class="custom-select" name="expenseCategory" id="expenseCategory" onchange="getOption()">
 					
 					{% for name in expenseCategoriesAssignedToUser %}
 					
@@ -81,6 +88,9 @@
 		</form>
 	</div>
 	<hr>
+	
+	
+
 			
 
 {% endblock %}

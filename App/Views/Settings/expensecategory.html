@@ -1,0 +1,182 @@
+{% extends "base_logged.html" %}
+
+{% block title %}Personal Budget - zmień kategorie wydatków{% endblock %}
+
+{% block body %}
+
+   
+	<div class="jumbotron">
+		<h2><i class="demo-icon icon-download"></i> Zmień kategorie wydatków</h2>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Obecnie zapisane kategorie wydatków</th>
+								<th scope="col">Miesięczny limit</th>
+							</tr>
+						</thead>
+						<tbody>
+						
+						{% for name in expenseCategoriesAssignedToUser %}
+					
+					
+					
+							<tr>
+								<th scope="row">{{ loop.index }}</th>
+								<td>{{ name.name }}</td>
+								<td>
+								
+								{% if name.month_limit == 0.00 %}
+								   Brak
+								{% else %}
+								   {{ name.month_limit }}
+								{% endif %}
+								
+								</td>
+								
+								
+								<td>
+								<!-- Button trigger modal -->
+									<button type="button" class="btn btn-block btn-info btn-sm" data-toggle="modal" data-target="#editModal{{ loop.index }}">
+									  Edytuj
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="editModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ loop.index }}" aria-hidden="true">
+									<form method="post" action="/settings/editExpenseCategory">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Edycja kategorii wydatku:{{" "}} {{ name.name }}</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											  <span aria-hidden="true">&times;</span>
+											</button>
+										  </div>
+										  <div class="modal-body">
+											<label for="newExpenseCategory">Wprowadź nową nazwę</label>
+											<input class="form-control" id="newExpenseCategory" name="newExpenseCategory" placeholder="Nowa nazwa" autofocus value="{{ name.name }}" required />
+											<input type="hidden" value="{{ name.name }}" name="oldExpenseCategory">
+											<div class="form-group mt-3">
+												<label for="limitAmount">Limit miesięczny</label>
+												<input type="number" class="form-control" id="limitAmount" name="limitAmount" step=".01" placeholder="wpisz kwotę" value="{{ name.month_limit }}">
+												
+											</div>
+											<div class="form-check mt-3">
+												  <input class="form-check-input" type="checkbox" value="Yes" id="expenseLimitEnabled" name="expenseLimitEnabled">
+												  <label class="form-check-label" for="expenseLimitEnabled">
+													Limit aktywny
+												  </label>
+												</div>
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
+								 			<button type="submit" class="btn btn-primary">Zapisz</button>
+										  </div>
+										</div>
+									  </div>
+									  </form>
+									</div>
+								</td>
+								<td>
+									<button type="button" class="btn btn-block btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ loop.index }}">
+									  Usuń
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="deleteModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ loop.index }}" aria-hidden="true">
+									<form method="post" action="/settings/deleteExpenseCategory">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Usuwanie kategorii wydatku:{{" "}} {{ name.name }}</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											  <span aria-hidden="true">&times;</span>
+											</button>
+										  </div>
+										  <div class="modal-body">
+											Uważaj, chcesz usunąć kategorię wydatku {{" "}} {{ name.name }}! Usunięcie kategorii wydatku spowoduje również usunięcie wszystkich wydatków z listy, w których ta kategoria wydatku została wybrana. Czy na pewno chcesz kontynuować?
+											 <input type="hidden" value="{{ name.name }}" name="methodToDelete">
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
+											<button type="submit" class="btn btn-danger">Usuń</button>
+										  </div>
+										</div>
+									  </div>
+									  </form>
+									</div>
+								</td>
+								
+							</tr>
+					
+						{% endfor %}
+						
+						</tbody>
+					</table>
+					
+					
+					
+					
+					
+					
+				</div>
+				
+				<div class="col-md-6">
+					
+					
+					<button type="button" class="btn btn-block btn-outline-primary btn-lg" data-toggle="modal" data-target="#addIncomeCategory">
+									  Dodaj kategorię wydatku
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="addIncomeCategory" tabindex="-1" role="dialog" aria-labelledby="addPaymentMethod" aria-hidden="true">
+									<form method="post" action="/settings/addNewExpenseCategory">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Dodawanie kategorii wydatku</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											  <span aria-hidden="true">&times;</span>
+											</button>
+										  </div>
+										  <div class="modal-body">
+											<label for="newExpenseCategory">Wprowadź nazwę kategorii wydatku</label>
+											<input class="form-control" id="newExpenseCategory" name="newExpenseCategory" placeholder="Nowa nazwa" autofocus value="" required />
+											
+											<div class="form-group mt-3">
+												<label for="limitAmount">Limit miesięczny</label>
+												<input type="number" class="form-control" id="limitAmount" name="limitAmount" step=".01" placeholder="wpisz kwotę">
+												
+											</div>
+											<div class="form-check mt-3">
+												  <input class="form-check-input" type="checkbox" value="" id="expenseLimitEnabled" name="expenseLimitEnabled">
+												  <label class="form-check-label" for="expenseLimitEnabled">
+													Limit aktywny
+												  </label>
+												</div>
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
+								 			<button type="submit" class="btn btn-primary">Zapisz</button>
+										  </div>
+										</div>
+									  </div>
+									  </form>
+									</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a type="button" href="/Settings/options" class="btn mb-3 mt-3 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Ustawienia</a>
+				</div>
+			</div>
+			<form method="post" action="/income/updateName">
+		</form>
+	</div>
+	<hr>
+			
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base_logged.html" %}
+
+{% block title %}Personal Budget - zmień imię{% endblock %}
+
+{% block body %}
+
+   
+	<div class="jumbotron">
+		<h2><i class="demo-icon icon-download"></i> Zmień imię</h2>
+			<div class="row">
+				<div class="col-md-6">
+					Obecnie zapisane imię:  {{" "}}{{ current_user.name }}
+				</div>
+			</div>
+			<form method="post" action="/settings/updateName">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="inputName">Nowe imię</label>
+						<input class="form-control" id="inputName" name="name" placeholder="Podaj imię" autofocus value="{{ user.name }}" required />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 mt-3 text-center">
+					<button type="submit" class="btn btn-block btn-outline-success btn-lg">Zatwierdź</button>
+				</div>
+				<div class="col-md-6 mt-3 text-center">
+					<a role="button" href="/settings/options" class="btn btn-block btn-outline-danger btn-lg">Anuluj</a>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+	<hr>
+			
+
+{% endblock %}

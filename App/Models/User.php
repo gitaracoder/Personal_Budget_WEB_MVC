@@ -63,6 +63,73 @@ class User extends \Core\Model
         return false;
     }
 	
+	public function updateName()
+    {
+        $this->validateName();
+
+        if (empty($this->errors)) {
+
+            $sql = 'UPDATE users
+					SET name = :name
+					WHERE id = :id';
+
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_STR);
+
+            return $stmt->execute();
+        }
+
+        return false;
+    }
+	
+	public function updateEmail()
+    {
+        $this->validateEmail();
+
+        if (empty($this->errors)) {
+
+            $sql = 'UPDATE users
+					SET email = :email
+					WHERE id = :id';
+
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_STR);
+
+            return $stmt->execute();
+        }
+
+        return false;
+    }
+	
+	public function updatePassword()
+    {
+		$password_hash = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->validatePassword();
+
+        if (empty($this->errors)) {
+
+            $sql = 'UPDATE users
+					SET password_hash = :password_hash
+					WHERE id = :id';
+
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_STR);
+
+            return $stmt->execute();
+        }
+
+        return false;
+    }
+	
 	public function chceckNewUserID()
     {
        
@@ -87,22 +154,29 @@ class User extends \Core\Model
      *
      * @return void
      */
-    public function validate()
+	 
+	 public function validateName()
     {
-        // Name
+		// Name
         if ($this->name == '') {
             $this->errors[] = 'Nazwa jest wymagana';
         }
-
-        // email address
+	}
+	
+	 public function validateEmail()
+    {
+		// email address
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
             $this->errors[] = 'Nieprawidłowy adres email';
         }
         if (static::emailExists($this->email)) {
             $this->errors[] = 'Podany adres email jest już zajęty';
         }
-
-        // Password
+	}
+	
+	 public function validatePassword()
+    {
+		// Password
         if (strlen($this->password) < 6) {
             $this->errors[] = 'Hasło musi składać się z co najmniej 6 znaków';
         }
@@ -114,6 +188,14 @@ class User extends \Core\Model
         if (preg_match('/.*\d+.*/i', $this->password) == 0) {
             $this->errors[] = 'Hasło musi zawierać co najmniej jedną cyfrę';
         }
+	}
+	 
+	 
+    public function validate()
+    {    
+		$this->validateName();
+		$this->validateEmail();
+		$this->validatePassword();
     }
 
     /**

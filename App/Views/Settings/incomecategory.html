@@ -1,0 +1,149 @@
+{% extends "base_logged.html" %}
+
+{% block title %}Personal Budget - zmień kategorie dochodów{% endblock %}
+
+{% block body %}
+
+   
+	<div class="jumbotron">
+		<h2><i class="demo-icon icon-download"></i> Zmień kategorie dochodów</h2>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Obecnie zapisane kategorie dochodów</th>
+							</tr>
+						</thead>
+						<tbody>
+						
+						{% for name in incomeCategoriesAssignedToUser %}
+					
+							<tr>
+								<th scope="row">{{ loop.index }}</th>
+								<td>{{ name.name }}</td>
+								<td>
+								<!-- Button trigger modal -->
+									<button type="button" class="btn btn-block btn-info btn-sm" data-toggle="modal" data-target="#editModal{{ loop.index }}">
+									  Edytuj
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="editModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ loop.index }}" aria-hidden="true">
+									<form method="post" action="/settings/editIncomeCategory">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Edycja źródła dochodu:{{" "}} {{ name.name }}</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											  <span aria-hidden="true">&times;</span>
+											</button>
+										  </div>
+										  <div class="modal-body">
+											<label for="inputName">Wprowadź nową nazwę</label>
+											<input class="form-control" id="newIncomeCategory" name="newIncomeCategory" placeholder="Nowa nazwa" autofocus value="" required />
+											<input type="hidden" value="{{ name.name }}" name="oldIncomeCategory">
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
+											<button type="submit" class="btn btn-primary">Zapisz</button>
+										  </div>
+										</div>
+									  </div>
+									  </form>
+									</div>
+								</td>
+								<td>
+									<button type="button" class="btn btn-block btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ loop.index }}">
+									  Usuń
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="deleteModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ loop.index }}" aria-hidden="true">
+									<form method="post" action="/settings/deleteIncomeCategory">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Usuwanie źródła dochodu:{{" "}} {{ name.name }}</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											  <span aria-hidden="true">&times;</span>
+											</button>
+										  </div>
+										  <div class="modal-body">
+											Uważaj, chcesz usunąć źródło dochodu {{" "}} {{ name.name }}! Usunięcie źródła dochodu spowoduje również usunięcie wszystkich dochodów z listy, w których to źródło dochodu zostało wybrane. Czy na pewno chcesz kontynuować?
+											 <input type="hidden" value="{{ name.name }}" name="methodToDelete">
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
+											<button type="submit" class="btn btn-danger">Usuń</button>
+										  </div>
+										</div>
+									  </div>
+									  </form>
+									</div>
+								</td>
+								
+								
+								
+							</tr>
+					
+						{% endfor %}
+						
+						</tbody>
+					</table>
+					
+					
+					
+					
+					
+					
+				</div>
+				
+				<div class="col-md-6 text-center">
+					
+					
+					<button type="button" class="btn btn-block btn-outline-primary btn-lg" data-toggle="modal" data-target="#addIncomeCategory">
+									  Dodaj źródło dochodu
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="addIncomeCategory" tabindex="-1" role="dialog" aria-labelledby="addPaymentMethod" aria-hidden="true">
+									<form method="post" action="/settings/addNewIncomeCategory">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Dodawanie źródła dochodu</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											  <span aria-hidden="true">&times;</span>
+											</button>
+										  </div>
+										  
+										  <div class="modal-body">
+											<label for="inputName">Wprowadź nazwę źródła dochodu</label>
+											<input class="form-control" id="newIncomeCategory" name="newIncomeCategory" placeholder="nazwa" autofocus value="" required />
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
+											<button type="submit" class="btn btn-primary">Zapisz</button>
+										  </div>
+										</div>
+									  </div>
+									  </form>
+									</div>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a type="button" href="/Settings/options" class="btn mb-3 mt-3 btn-block btn-outline-primary btn-lg"><i class="demo-icon icon-cog-alt"></i> Ustawienia</a>
+				</div>
+			</div>
+			<form method="post" action="/income/updateName">
+		</form>
+	</div>
+	<hr>
+			
+
+{% endblock %}

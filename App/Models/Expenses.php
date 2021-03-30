@@ -109,5 +109,74 @@ class Expenses extends \Core\Model
         }
 		
         }
+		
+		
+		
+	public static function getCategoryData($categoryID)
+    {
+		
+		
+		
+		
+		$sql = 'SELECT * FROM expenses_category_assigned_to_users WHERE id=:id';
+		
+		$db = static::getDB();
+        $stmt = $db->prepare($sql);
+		$stmt->bindValue(':id', $categoryID, PDO::PARAM_STR);
+		
+		$stmt->execute();
+		$category = $stmt->fetchAll();
+
+		return $category;
+		
+	}
+	
+	public static function getValue()
+    {
+		
+		
+		$v = intval($_GET['v']);
+
+		return $v;
+	}
+	
+	public static function getCategory()
+    {
+		
+		
+		$c = intval($_GET['c']);
+
+		return $c;
+	}
+	
+	public static function getThisMonthExpensesFromDB($category)
+    {
+		$sql = "SELECT SUM(amount) FROM expenses WHERE user_id=:userID AND expense_category_assigned_to_user_id =:category AND Year(date_of_expense) = Year(Now()) And Month(date_of_expense) = Month(Now())";
+		$db = static::getDB();
+        $stmt = $db->prepare($sql);
+		$stmt->bindValue(':userID', \App\Auth::getUserID(), PDO::PARAM_STR);
+		$stmt->bindValue(':category', $category, PDO::PARAM_STR);
+		
+		
+		$stmt->execute();
+		$expenses = $stmt->fetchAll();
+		
+		return $expenses;
+	}
+	
+		public static function checkIfIsInCurrentMonth($date)
+    {
+		
+		if((date("m", strtotime($date)) == date("m")) && (date("Y", strtotime($date)) == date("Y")))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
        
     }
