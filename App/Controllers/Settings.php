@@ -41,9 +41,6 @@ class Settings extends \Core\Controller
                 'user' => $user
             ]);					
         }
-		
-        
-		//View::renderTemplate('Settings/options.html');
     }
 	
 	public function changemailAction()
@@ -70,9 +67,6 @@ class Settings extends \Core\Controller
                 'user' => $user
             ]);					
         }
-		
-        
-		//View::renderTemplate('Settings/options.html');
     }
 	
 	public function changepasswordAction()
@@ -108,11 +102,6 @@ class Settings extends \Core\Controller
 			Flash::addMessage('Wprowadzono niepoprawne obecne hasło', 'alert alert-warning');
 			View::renderTemplate('settings/changepassword.html');
 		}
-		
-		
-		
-        
-		//View::renderTemplate('Settings/options.html');
     }
 	
 	
@@ -175,15 +164,7 @@ class Settings extends \Core\Controller
 		
     }
 
-
-
-
-
-
-
-
-
-public function addNewIncomeCategoryAction()
+	public function addNewIncomeCategoryAction()
     {
         $setup = new Setting($_POST);
 		
@@ -198,7 +179,6 @@ public function addNewIncomeCategoryAction()
 			Flash::addMessage('Pomyślnie dodano kategorię przychodu', 'alert alert-success');
 			View::renderTemplate('Settings/incomecategory.html');
 		}
-		
     }
 	
 	public function deleteIncomeCategoryAction()
@@ -224,15 +204,7 @@ public function addNewIncomeCategoryAction()
 			Flash::addMessage('Pomyślnie edytowano kategorię przychodu', 'alert alert-success');
 			View::renderTemplate('Settings/incomecategory.html');
 		}
-		
     }
-	
-	
-	
-	
-	
-	
-	
 	
 	public function addNewExpenseCategoryAction()
     {
@@ -249,7 +221,6 @@ public function addNewIncomeCategoryAction()
 			Flash::addMessage('Pomyślnie dodano kategorię wydatku', 'alert alert-success');
 			View::renderTemplate('Settings/expensecategory.html');
 		}
-		
     }
 	
 	public function deleteExpenseCategoryAction()
@@ -278,6 +249,4 @@ public function addNewIncomeCategoryAction()
 		}
 		
     }
-
-
 }

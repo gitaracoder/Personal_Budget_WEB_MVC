@@ -8,7 +8,6 @@ use PDO;
 
 class Setting extends \Core\Model
 {
-	
 	public function __construct($data = [])
     {
         foreach ($data as $key => $value) {
@@ -41,14 +40,13 @@ class Setting extends \Core\Model
 		$sql = 'INSERT INTO payment_methods_assigned_to_users (user_id, name)
                     VALUES (:userID, :name)';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':name', $this->newPaymentMethod, PDO::PARAM_STR);
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':name', $this->newPaymentMethod, PDO::PARAM_STR);
             
-
-            return $stmt->execute();
+        return $stmt->execute();
 	}
 	
 	public function updatePaymentMethod()
@@ -57,15 +55,14 @@ class Setting extends \Core\Model
 				SET name = :newName
 				WHERE user_id = :userID AND name = :oldName';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':newName', $this->newPaymentMethod, PDO::PARAM_STR);
-			 $stmt->bindValue(':oldName', $this->oldPaymentMethod, PDO::PARAM_STR);
-            
-
-            return $stmt->execute();
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':newName', $this->newPaymentMethod, PDO::PARAM_STR);
+		$stmt->bindValue(':oldName', $this->oldPaymentMethod, PDO::PARAM_STR);
+		
+		return $stmt->execute();
 	}
 	
 	public function deletePaymentMethod()
@@ -86,31 +83,28 @@ class Setting extends \Core\Model
 		$sql = 'DELETE FROM payment_methods_assigned_to_users
                     WHERE user_id = :userID AND name = :name';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':name', $this->methodToDelete, PDO::PARAM_STR);
-            
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':name', $this->methodToDelete, PDO::PARAM_STR);
+		
+		$stmt->execute();
+		
+		$sql = 'DELETE FROM expenses
+				WHERE user_id = :userID AND payment_method_assigned_to_user_id = :payment_method_assigned_to_user_id';
 
-            $stmt->execute();
-			
-			$sql = 'DELETE FROM expenses
-                    WHERE user_id = :userID AND payment_method_assigned_to_user_id = :payment_method_assigned_to_user_id';
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':payment_method_assigned_to_user_id', $categoryNumber, PDO::PARAM_STR);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':payment_method_assigned_to_user_id', $categoryNumber, PDO::PARAM_STR);
-
-
-            $stmt->execute();
-			
-			
+		$stmt->execute();
+				
 	}
 	
-	 public function checkIfIncomeCategoryAlreadyExists()
+	public function checkIfIncomeCategoryAlreadyExists()
     {
 		$existingIncomeCategories = Incomes::getIncomeCategoriesAssigned();
 		$result = false;
@@ -135,14 +129,13 @@ class Setting extends \Core\Model
 		$sql = 'INSERT INTO incomes_category_assigned_to_users (user_id, name)
                     VALUES (:userID, :name)';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':name', $this->newIncomeCategory, PDO::PARAM_STR);
-            
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':name', $this->newIncomeCategory, PDO::PARAM_STR);
 
-            return $stmt->execute();
+		return $stmt->execute();
 	}
 	
 	public function updateIncomeCategory()
@@ -151,15 +144,15 @@ class Setting extends \Core\Model
 				SET name = :newName
 				WHERE user_id = :userID AND name = :oldName';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':newName', $this->newIncomeCategory, PDO::PARAM_STR);
-			 $stmt->bindValue(':oldName', $this->oldIncomeCategory, PDO::PARAM_STR);
-            
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':newName', $this->newIncomeCategory, PDO::PARAM_STR);
+		$stmt->bindValue(':oldName', $this->oldIncomeCategory, PDO::PARAM_STR);
+		
 
-            return $stmt->execute();
+		return $stmt->execute();
 	}
 	
 	public function deleteIncomeCategory()
@@ -170,47 +163,37 @@ class Setting extends \Core\Model
 		$db = static::getDB();
         $stmt = $db->prepare($sql);
 		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-		$stmt->bindValue(':name', $this->methodToDelete, PDO::PARAM_STR);
-			
+		$stmt->bindValue(':name', $this->methodToDelete, PDO::PARAM_STR);	
 		
 		$stmt->execute();
 		$categories = $stmt->fetchAll();
-		//var_dump($categories);
 		$categoryNumber = $categories[0]['id'];
-		
-		//echo $categories[0]['id'];
-		
-		
 		
 		$sql = 'DELETE FROM incomes_category_assigned_to_users
                     WHERE user_id = :userID AND name = :name';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':name', $this->methodToDelete, PDO::PARAM_STR);
-            
-
-            $stmt->execute();
-			
-			$sql = 'DELETE FROM incomes
-                    WHERE user_id = :userID AND income_category_assigned_to_user_id = :income_category_assigned_to_user_id';
-
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
-
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':income_category_assigned_to_user_id', $categoryNumber, PDO::PARAM_STR);
-			 
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':name', $this->methodToDelete, PDO::PARAM_STR);
 		
-            
 
-            $stmt->execute();
+		$stmt->execute();
+		
+		$sql = 'DELETE FROM incomes
+				WHERE user_id = :userID AND income_category_assigned_to_user_id = :income_category_assigned_to_user_id';
+
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
+
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':income_category_assigned_to_user_id', $categoryNumber, PDO::PARAM_STR);
+
+        $stmt->execute();
 			
 			
 	}
-	
 	
 	public function checkIfExpenseCategoryAlreadyExists()
     {
@@ -236,9 +219,7 @@ class Setting extends \Core\Model
 				$result = false;
 			}
 		}
-		
-		
-		
+
 		return $result;
 	}
 	
@@ -249,10 +230,10 @@ class Setting extends \Core\Model
 		$monthLimitEnabled = 0;
 		
 		if (isset($this->expenseLimitEnabled))
-			 {
-				 $monthLimitAmount = $this->limitAmount;
-				 $monthLimitEnabled = 1;
-			 }
+			{
+				$monthLimitAmount = $this->limitAmount;
+				$monthLimitEnabled = 1;
+			}
             else
 			{
 				$monthLimitAmount = 0;
@@ -262,16 +243,16 @@ class Setting extends \Core\Model
 		$sql = 'INSERT INTO expenses_category_assigned_to_users (user_id, name, month_limit, month_limit_activated)
                     VALUES (:userID, :name, :month_limit, :month_limit_activated)';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':name', $this->newExpenseCategory, PDO::PARAM_STR);
-			 $stmt->bindValue(':month_limit', $monthLimitAmount, PDO::PARAM_STR);
-			 $stmt->bindValue(':month_limit_activated', $monthLimitEnabled, PDO::PARAM_STR);
-            
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':name', $this->newExpenseCategory, PDO::PARAM_STR);
+		$stmt->bindValue(':month_limit', $monthLimitAmount, PDO::PARAM_STR);
+		$stmt->bindValue(':month_limit_activated', $monthLimitEnabled, PDO::PARAM_STR);
+		
 
-            return $stmt->execute();
+		return $stmt->execute();
 	}
 	
 	public function updateExpenseCategory()
@@ -280,10 +261,10 @@ class Setting extends \Core\Model
 		$monthLimitEnabled = 0;
 		
 		if (isset($this->expenseLimitEnabled))
-			 {
-				 $monthLimitAmount = $this->limitAmount;
-				 $monthLimitEnabled = 1;
-			 }
+			{
+				$monthLimitAmount = $this->limitAmount;
+				$monthLimitEnabled = 1;
+			}
             else
 			{
 				$monthLimitAmount = 0;
@@ -294,18 +275,16 @@ class Setting extends \Core\Model
 				SET name = :newName, month_limit = :month_limit, month_limit_activated = :month_limit_activated
 				WHERE user_id = :userID AND name = :oldName';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':newName', $this->newExpenseCategory, PDO::PARAM_STR);
-			 $stmt->bindValue(':oldName', $this->oldExpenseCategory, PDO::PARAM_STR);
-			 $stmt->bindValue(':month_limit', $monthLimitAmount, PDO::PARAM_STR);
-			 $stmt->bindValue(':month_limit_activated', $monthLimitEnabled, PDO::PARAM_STR);
-			 
-			 
-			
-            return $stmt->execute();
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':newName', $this->newExpenseCategory, PDO::PARAM_STR);
+		$stmt->bindValue(':oldName', $this->oldExpenseCategory, PDO::PARAM_STR);
+		$stmt->bindValue(':month_limit', $monthLimitAmount, PDO::PARAM_STR);
+		$stmt->bindValue(':month_limit_activated', $monthLimitEnabled, PDO::PARAM_STR);
+
+		return $stmt->execute();
 	}
 	
 	public function deleteExpenseCategory()
@@ -321,39 +300,29 @@ class Setting extends \Core\Model
 		
 		$stmt->execute();
 		$categories = $stmt->fetchAll();
-		//var_dump($categories);
 		$categoryNumber = $categories[0]['id'];
-		
-		//echo $categories[0]['id'];
-		
-		
 		
 		$sql = 'DELETE FROM expenses_category_assigned_to_users
                     WHERE user_id = :userID AND name = :name';
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':name', $this->methodToDelete, PDO::PARAM_STR);
-            
-
-            $stmt->execute();
-			
-			$sql = 'DELETE FROM expenses
-                    WHERE user_id = :userID AND expense_category_assigned_to_user_id = :expense_category_assigned_to_user_id';
-
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
-
-            $stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
-			 $stmt->bindValue(':expense_category_assigned_to_user_id', $categoryNumber, PDO::PARAM_STR);
-			 
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':name', $this->methodToDelete, PDO::PARAM_STR);
 		
-            
 
-            $stmt->execute();
-			
-			
+		$stmt->execute();
+		
+		$sql = 'DELETE FROM expenses
+				WHERE user_id = :userID AND expense_category_assigned_to_user_id = :expense_category_assigned_to_user_id';
+
+		$db = static::getDB();
+		$stmt = $db->prepare($sql);
+
+		$stmt->bindValue(':userID', $_SESSION['user_id'], PDO::PARAM_STR);
+		$stmt->bindValue(':expense_category_assigned_to_user_id', $categoryNumber, PDO::PARAM_STR);
+
+        $stmt->execute();		
 	}
 }

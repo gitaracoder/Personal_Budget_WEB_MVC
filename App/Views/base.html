@@ -5,8 +5,8 @@
     <title>{% block title %}{% endblock %}</title>
     
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/main.css">
-		<link rel="stylesheet" href="/css/fontello.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/fontello.css">
 </head>
 <body>
 
@@ -29,7 +29,7 @@
 				  </li>
 				</ul>
 			</div>
-		</nav>
+</nav>
 
 		<main>
 
@@ -44,29 +44,22 @@
 				</div>
 			</div>
 			
-			<div class="container">
+		<div class="container">
 			
 			{% for message in flash_messages %}
 
-<div class="{{ message.type }}" role="alert">
-
-			
-					{{ message.body }}
-				</div>
+			<div class="{{ message.type }}" role="alert">
+				{{ message.body }}
+			</div>
 			
 			{% endfor %}
-			
 			
 			{% block body %}
 			
 			{% endblock %}
 			
-			</div>
-			
-			
+		</div>
 
-	
-	
 	</main>
 	<footer class="container">
 			<p>&copy; Personal Budget 2020</p>

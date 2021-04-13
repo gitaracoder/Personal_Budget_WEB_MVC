@@ -137,7 +137,6 @@ class Balances extends \Core\Model
 		{
 			$this->sumOfIncomes += $item['amount'];
 		}
-		//echo $this->sumOfIncomes;
     }
 	
 	public function sumOfExpenses()
@@ -147,7 +146,6 @@ class Balances extends \Core\Model
 		{
 			$this->sumOfExpenses += $item['amount'];
 		}
-		//echo $this->sumOfExpenses;
     }
 	
 	public static function addSumOfIncomes($sum)
@@ -182,7 +180,6 @@ class Balances extends \Core\Model
         }
     }
 	
-	
 	public static function addExpenseToChart($message)
     {
         $_SESSION['expenseToChart'] = $message;
@@ -198,7 +195,6 @@ class Balances extends \Core\Model
             return $messages;
         }
     }
-	
 	
 	public static function addIncome($message)
     {
@@ -231,9 +227,6 @@ class Balances extends \Core\Model
             return $messages;
         }
     }
-	
-	
-	
 	
 	public static function sendSelected($sum)
     {

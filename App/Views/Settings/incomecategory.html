@@ -25,12 +25,9 @@
 								<th scope="row">{{ loop.index }}</th>
 								<td>{{ name.name }}</td>
 								<td>
-								<!-- Button trigger modal -->
 									<button type="button" class="btn btn-block btn-info btn-sm" data-toggle="modal" data-target="#editModal{{ loop.index }}">
 									  Edytuj
 									</button>
-
-									<!-- Modal -->
 									<div class="modal fade" id="editModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ loop.index }}" aria-hidden="true">
 									<form method="post" action="/settings/editIncomeCategory">
 									  <div class="modal-dialog" role="document">
@@ -59,8 +56,6 @@
 									<button type="button" class="btn btn-block btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ loop.index }}">
 									  Usuń
 									</button>
-
-									<!-- Modal -->
 									<div class="modal fade" id="deleteModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ loop.index }}" aria-hidden="true">
 									<form method="post" action="/settings/deleteIncomeCategory">
 									  <div class="modal-dialog" role="document">
@@ -84,56 +79,42 @@
 									  </form>
 									</div>
 								</td>
-								
-								
-								
 							</tr>
 					
 						{% endfor %}
 						
 						</tbody>
 					</table>
-					
-					
-					
-					
-					
-					
 				</div>
 				
 				<div class="col-md-6 text-center">
-					
-					
 					<button type="button" class="btn btn-block btn-outline-primary btn-lg" data-toggle="modal" data-target="#addIncomeCategory">
-									  Dodaj źródło dochodu
-									</button>
-
-									<!-- Modal -->
-									<div class="modal fade" id="addIncomeCategory" tabindex="-1" role="dialog" aria-labelledby="addPaymentMethod" aria-hidden="true">
-									<form method="post" action="/settings/addNewIncomeCategory">
-									  <div class="modal-dialog" role="document">
-										<div class="modal-content">
-										  <div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Dodawanie źródła dochodu</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											  <span aria-hidden="true">&times;</span>
-											</button>
-										  </div>
-										  
-										  <div class="modal-body">
-											<label for="inputName">Wprowadź nazwę źródła dochodu</label>
-											<input class="form-control" id="newIncomeCategory" name="newIncomeCategory" placeholder="nazwa" autofocus value="" required />
-										  </div>
-										  <div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
-											<button type="submit" class="btn btn-primary">Zapisz</button>
-										  </div>
-										</div>
-									  </div>
-									  </form>
-									</div>
+					Dodaj źródło dochodu
+					</button>
+					<div class="modal fade" id="addIncomeCategory" tabindex="-1" role="dialog" aria-labelledby="addPaymentMethod" aria-hidden="true">
+					<form method="post" action="/settings/addNewIncomeCategory">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Dodawanie źródła dochodu</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  
+						  <div class="modal-body">
+							<label for="inputName">Wprowadź nazwę źródła dochodu</label>
+							<input class="form-control" id="newIncomeCategory" name="newIncomeCategory" placeholder="nazwa" autofocus value="" required />
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
+							<button type="submit" class="btn btn-primary">Zapisz</button>
+						  </div>
+						</div>
+					  </div>
+					  </form>
+					</div>
 				</div>
-				
 			</div>
 			<div class="row">
 				<div class="col-md-12">
@@ -145,5 +126,4 @@
 	</div>
 	<hr>
 			
-
 {% endblock %}

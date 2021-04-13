@@ -30,9 +30,8 @@ class Expense extends \Core\Controller
 			}
 			
             View::renderTemplate('Expense/new.html', [
-                //'income' => $income
+                
             ]);
-			//var_dump($income->errors);
         }
     }
 	 
@@ -49,7 +48,6 @@ class Expense extends \Core\Controller
 			$alreadySpentSum = 0;
 		}
 
-		
 		$balance = $input["value"] + $alreadySpentSum;
 		$aboveLimit = ($balance - $data[0]['month_limit']);
 		$aboveLimit = number_format((float) $aboveLimit , 2, '.', ''); 
@@ -69,13 +67,11 @@ class Expense extends \Core\Controller
 				'<div class="alert alert-danger" role="alert">' . "Limit w kategorii " . $data[0]['name'] . ": ". $data[0]['month_limit'] . ". Dotychczas  wydano: " . $alreadySpentSum . ". Łącznie wydasz " . $balance . ". Przekraczasz limit o: " . $aboveLimit  . '</div>'
 				);
 			}
-			
 		}
 		else
 		{
 			echo json_encode("");
-		}
-		
+		}	
     }
 
     public function newAction()

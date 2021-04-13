@@ -89,16 +89,12 @@ class Expenses extends \Core\Model
 	
     public function validate()
     {
-        // Amount
-       
 		if ($this->amountExpense == '') {
             $this->errors[] = 'Wpisz kwotę wydatku';
         }
 	   elseif ($this->amountExpense <= 0) {
             $this->errors[] = 'Kwota wydatku nie może być mniejsza lub równa zero';
         }
-
-        // Date of income
 		
 		if ($this->dateExpense == '') {
             $this->errors[] = 'Wprowadź datę';
@@ -108,16 +104,10 @@ class Expenses extends \Core\Model
             $this->errors[] = 'Data przychodu nie może wykraczać poza dzisiejszą datę.';
         }
 		
-        }
-		
-		
+    }
 		
 	public static function getCategoryData($categoryID)
     {
-		
-		
-		
-		
 		$sql = 'SELECT * FROM expenses_category_assigned_to_users WHERE id=:id';
 		
 		$db = static::getDB();
@@ -127,14 +117,11 @@ class Expenses extends \Core\Model
 		$stmt->execute();
 		$category = $stmt->fetchAll();
 
-		return $category;
-		
+		return $category;	
 	}
 	
 	public static function getValue()
     {
-		
-		
 		$v = intval($_GET['v']);
 
 		return $v;
@@ -142,8 +129,6 @@ class Expenses extends \Core\Model
 	
 	public static function getCategory()
     {
-		
-		
 		$c = intval($_GET['c']);
 
 		return $c;
@@ -156,7 +141,6 @@ class Expenses extends \Core\Model
         $stmt = $db->prepare($sql);
 		$stmt->bindValue(':userID', \App\Auth::getUserID(), PDO::PARAM_STR);
 		$stmt->bindValue(':category', $category, PDO::PARAM_STR);
-		
 		
 		$stmt->execute();
 		$expenses = $stmt->fetchAll();
@@ -175,8 +159,5 @@ class Expenses extends \Core\Model
 		{
 			return false;
 		}
-	}
-	
-	
-       
-    }
+	}   
+}

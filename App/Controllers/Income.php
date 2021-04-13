@@ -30,14 +30,9 @@ class Income extends \Core\Controller
 			}
 
             View::renderTemplate('Income/new.html', [
-                //'income' => $income
+                
             ]);
         }
-    }
-	 
-    public function indexAction()
-    {
-        //View::renderTemplate('Income/new.html');
     }
 
     public function newAction()

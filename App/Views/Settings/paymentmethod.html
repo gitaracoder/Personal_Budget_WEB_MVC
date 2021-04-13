@@ -3,9 +3,6 @@
 {% block title %}Personal Budget - zmień metody płatności{% endblock %}
 
 {% block body %}
-
-
-
    
 	<div class="jumbotron">
 		<h2><i class="demo-icon icon-cog-alt"></i> Zmień metody płatności</h2>
@@ -28,13 +25,9 @@
 								<th scope="row">{{ loop.index }}</th>
 								<td>{{ name.name }}</td>
 								<td>
-								
-								<!-- Button trigger modal -->
 									<button type="button" class="btn btn-block btn-info btn-sm" data-toggle="modal" data-target="#editModal{{ loop.index }}">
 									  Edytuj
 									</button>
-
-									<!-- Modal -->
 									<div class="modal fade" id="editModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ loop.index }}" aria-hidden="true">
 									<form method="post" action="/settings/editPaymentMethod">
 									  <div class="modal-dialog" role="document">
@@ -58,16 +51,12 @@
 									  </div>
 									  </form>
 									</div>
-								
-								
 								</td>
 								<td>
 								
 								<button type="button" class="btn btn-block btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ loop.index }}">
 									  Usuń
-									</button>
-
-									<!-- Modal -->
+								</button>
 									<div class="modal fade" id="deleteModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ loop.index }}" aria-hidden="true">
 									<form method="post" action="/settings/deletePaymentMethod">
 									  <div class="modal-dialog" role="document">
@@ -99,47 +88,37 @@
 						
 						</tbody>
 					</table>
-					
-					
-					
-					
-					
-					
 				</div>
 				
-				<div class="col-md-6 text-center">
-					
-					
+				<div class="col-md-6 text-center">		
 					<button type="button" class="btn btn-block btn-outline-primary btn-lg" data-toggle="modal" data-target="#addPaymentMethod">
-									  Dodaj metodę płatności
-									</button>
+					Dodaj metodę płatności
+					</button>
 
-									<!-- Modal -->
-									<div class="modal fade" id="addPaymentMethod" tabindex="-1" role="dialog" aria-labelledby="addPaymentMethod" aria-hidden="true">
-									<form method="post" action="/settings/addNewPaymentMethod">
-									  <div class="modal-dialog" role="document">
-										<div class="modal-content">
-										  <div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Dodawanie metody płatności</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											  <span aria-hidden="true">&times;</span>
-											</button>
-										  </div>
-										  
-										  <div class="modal-body">
-											<label for="inputName">Wprowadź nazwę metody płatności</label>
-											<input class="form-control" id="newPaymentMethod" name="newPaymentMethod" placeholder="nazwa" autofocus value="" required />
-										  </div>
-										  <div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
-											<button type="submit" class="btn btn-primary">Zapisz</button>
-										  </div>
-										</div>
-									  </div>
-									  </form>
-									</div>
+					<div class="modal fade" id="addPaymentMethod" tabindex="-1" role="dialog" aria-labelledby="addPaymentMethod" aria-hidden="true">
+					<form method="post" action="/settings/addNewPaymentMethod">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Dodawanie metody płatności</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  
+						  <div class="modal-body">
+							<label for="inputName">Wprowadź nazwę metody płatności</label>
+							<input class="form-control" id="newPaymentMethod" name="newPaymentMethod" placeholder="nazwa" autofocus value="" required />
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Wyjdź</button>
+							<button type="submit" class="btn btn-primary">Zapisz</button>
+						  </div>
+						</div>
+					  </div>
+					  </form>
+					</div>
 				</div>
-				
 			</div>
 			<div class="row">
 				<div class="col-md-12">
@@ -150,7 +129,5 @@
 		</form>
 	</div>
 	<hr>
-			<!-- Modal -->
-
 
 {% endblock %}

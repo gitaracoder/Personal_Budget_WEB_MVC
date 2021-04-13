@@ -66,16 +66,12 @@ class Incomes extends \Core\Model
 
     public function validate()
     {
-        // Amount
-       
 		if ($this->incomeAmount == '') {
             $this->errors[] = 'Wpisz kwotę przychodu';
         }
 	   elseif ($this->incomeAmount <= 0) {
             $this->errors[] = 'Kwota przychodu nie może być mniejsza lub równa zero';
         }
-
-        // Date of income
 		
 		if ($this->incomeDate == '') {
             $this->errors[] = 'Wprowadź datę';
@@ -85,6 +81,5 @@ class Incomes extends \Core\Model
             $this->errors[] = 'Data przychodu nie może wykraczać poza dzisiejszą datę.';
         }
 
-        }
-       
-    }
+    }    
+}

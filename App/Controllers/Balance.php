@@ -16,11 +16,6 @@ class Balance extends \Core\Controller
     {
         Balances::displayFromSelectedPeriod();
     }
-	 
-    public function indexAction()
-    {
-        //View::renderTemplate('Income/new.html');
-    }
 
     public function browseAction()
     {	
